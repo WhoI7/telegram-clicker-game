@@ -39,21 +39,7 @@ function startTimer() {
         }
     }, 1000);
 }
-function shareScore() {
-    if (typeof Telegram !== 'undefined' && Telegram.Game) {
-        // Отримуємо результат гри
-        var score = 100; // Замініть на ваш фактичний рахунок
 
-        // Ділимося результатом через Telegram
-        Telegram.Game.shareScore(score)
-            .then(function () {
-                console.log("Результат успішно поділений!");
-            })
-            .catch(function (error) {
-                console.error("Помилка при поділі результату: ", error);
-            });
-    }
-}
 // Завершення гри
 function endGame() {
     alert('Гра завершена! Ваш рахунок: ' + score);
@@ -62,20 +48,8 @@ function endGame() {
         element.disabled = true;
     });
     // Надіслати результат у Telegram
-    var score = 100; // Замініть на ваш фактичний рахунок
-
-        // Ділимося результатом через Telegram
-        Telegram.Game.shareScore(score)
-            .then(function () {
-                console.log("Результат успішно поділений!");
-            })
-            .catch(function (error) {
-                console.error("Помилка при поділі результату: ", error);
-            });
+    Telegram.WebApp.sendData(score.toString());
 }
-// Цей код буде викликаний після завершення гри
-
-
 
 // Запуск гри
 initObjects();
