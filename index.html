@@ -20,5 +20,31 @@
         </div>
     </div>
     <script src="script.js"></script>
+        <script>
+        // Ініціалізація Telegram WebApp
+        try {
+            Telegram.WebApp.ready();
+            console.log("Telegram WebApp initialized successfully");
+        } catch (error) {
+            console.error("Error initializing Web App:", error);
+        }
+
+        // Debug information about the user
+        console.log("User info:", Telegram.WebApp.initDataUnsafe);
+
+        let score = 0;
+
+        // Додаємо обробник для кнопки "+1"
+        document.getElementById("add").addEventListener("click", function () {
+            score++;
+            document.getElementById("score").textContent = "Score: " + score;
+        });
+
+        // Обробка відправки результату через Telegram Web App
+        document.getElementById("submit").addEventListener("click", function () {
+            Telegram.WebApp.sendData(score.toString()); // Відправляємо рахунок у вигляді тексту
+        });
+    </script>
+
 </body>
 </html>
