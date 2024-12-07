@@ -19,32 +19,43 @@
             <button class="clickable-object"></button>
         </div>
     </div>
-    <script src="script.js"></script>
-        <script>
-        // Ініціалізація Telegram WebApp
-        try {
-            Telegram.WebApp.ready();
-            console.log("Telegram WebApp initialized successfully");
-        } catch (error) {
-            console.error("Error initializing Web App:", error);
+
+    <script>
+        // Ініціалізація WebApp для Telegram
+        Telegram.WebApp.ready();
+        console.log("Telegram WebApp initialized successfully");
+
+        // Оновлення вигляду та функціональності інтерфейсу WebApp
+        Telegram.WebApp.expand();
+        Telegram.WebApp.setBackgroundColor("#ffffff"); // Змінюємо фон на білий
+
+        // Функціональність гри
+        let score = 0;
+        let timer = 30;
+        const scoreElement = document.getElementById("score");
+        const timerElement = document.getElementById("timer");
+        const clickableObjects = document.querySelectorAll(".clickable-object");
+
+        // Оновлення рахунку
+        function updateScore() {
+            score++;
+            scoreElement.textContent = `Очки: ${score}`;
         }
 
-        // Debug information about the user
-        console.log("User info:", Telegram.WebApp.initDataUnsafe);
+        // Таймер
+        const timerInterval = setInterval(() => {
+            timer--;
+            timerElement.textContent = `Час: ${timer}`;
+            if (timer <= 0) {
+                clearInterval(timerInterval);
+                alert(`Гру завершено! Ваш рахунок: ${score}`);
+            }
+        }, 1000);
 
-        let score = 0;
-
-        // Додаємо обробник для кнопки "+1"
-        document.getElementById("add").addEventListener("click", function () {
-            score++;
-            document.getElementById("score").textContent = "Score: " + score;
-        });
-
-        // Обробка відправки результату через Telegram Web App
-        document.getElementById("submit").addEventListener("click", function () {
-            Telegram.WebApp.sendData(score.toString()); // Відправляємо рахунок у вигляді тексту
+        // Додавання подій до кнопок
+        clickableObjects.forEach(button => {
+            button.addEventListener("click", updateScore);
         });
     </script>
-
 </body>
 </html>
